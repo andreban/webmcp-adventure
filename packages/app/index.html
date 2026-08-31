@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebMCP Adventure</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header / Mission Status Bar -->
+      <header class="app-header">
+        <div class="logo-group">
+          <span class="logo-badge">WEBMCP</span>
+          <h1>SPACESHIP ADVENTURE</h1>
+        </div>
+        <div class="mission-status-bar" id="mission-status">
+          <div class="status-chip" id="status-sg1">
+            <span class="indicator"></span> 1. Course
+          </div>
+          <div class="status-chip" id="status-sg2">
+            <span class="indicator"></span> 2. Orientation
+          </div>
+          <div class="status-chip" id="status-sg3">
+            <span class="indicator"></span> 3. Hyperdrive
+          </div>
+          <div class="webmcp-badge" id="webmcp-status">
+            <span class="pulse"></span> WebMCP Active
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Layout: Viewport on Top, Log Pane on Bottom -->
+      <main class="game-container">
+        <!-- Top Viewport: PixiJS Canvas & Room HUD -->
+        <section class="viewport-section">
+          <div id="pixi-viewport" class="pixi-viewport"></div>
+          <div class="hud-overlay" id="hud-overlay">
+            <div class="hud-robot-card" id="hud-robot-card">
+              <img class="robot-avatar-thumb" src="./assets/ship_robot.jpg" alt="Unit-7 Robot Portrait" />
+              <div class="robot-meta">
+                <span class="robot-callsign">UNIT-7 (ACTIVE)</span>
+                <span class="robot-state-label">MAINTENANCE BOT</span>
+              </div>
+            </div>
+            <div class="hud-right-group">
+              <div class="hud-inventory" id="hud-inventory">
+                <span class="hud-title">INVENTORY:</span>
+                <div class="inventory-tags" id="inventory-tags">
+                  <span class="empty-tag">(Empty)</span>
+                </div>
+              </div>
+              <div class="hud-room" id="hud-room">
+                <span class="hud-title">ROOM:</span>
+                <span class="room-tag" id="current-room-name">Janitor's Closet</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Interactive Agent Testing Bar -->
+        <section class="agent-bar">
+          <div class="agent-bar-title">AGENT TOOL CONSOLE:</div>
+          <div class="tool-quick-buttons">
+            <button class="tool-btn" data-tool="list_inventory">list_inventory</button>
+            <button class="tool-btn" data-tool="look_at" data-params='{"target":"room"}'>look_at room</button>
+            <button class="tool-btn" data-tool="walk_to" data-prompt="Enter destination (e.g. corridor, bridge, mechanical_room):">walk_to...</button>
+            <button class="tool-btn" data-tool="pick_up" data-prompt="Enter item to pick up (e.g. battery, new_fuse):">pick_up...</button>
+            <button class="tool-btn" data-tool="talk_to" data-prompt-target="Talk to whom (e.g. comms_agent, mechanical_agent, navigator):" data-prompt-msg="Message:">talk_to...</button>
+            <button class="tool-btn" data-tool="use" data-prompt-target="Target (e.g. storage_keypad, navigator, hyperdrive_unit, thruster_console):" data-prompt-item="Item / PIN (optional):">use...</button>
+          </div>
+          <div class="custom-command-row">
+            <select id="tool-select" class="tool-select">
+              <option value="list_inventory">list_inventory</option>
+              <option value="look_at">look_at</option>
+              <option value="walk_to">walk_to</option>
+              <option value="pick_up">pick_up</option>
+              <option value="open">open</option>
+              <option value="close">close</option>
+              <option value="push">push</option>
+              <option value="pull">pull</option>
+              <option value="use">use</option>
+              <option value="give">give</option>
+              <option value="talk_to">talk_to</option>
+            </select>
+            <input type="text" id="tool-param-input" placeholder='Target / Params (e.g. target="room" or {"target":"bridge"})' />
+            <button id="tool-exec-btn" class="exec-btn">Execute Tool</button>
+          </div>
+        </section>
+
+        <!-- Bottom Pane: WebMCP Command Log Stream -->
+        <section class="log-section">
+          <div class="log-header">
+            <span class="log-title">&#9660; WEBMCP COMMAND STREAM & LOG</span>
+            <div class="log-actions">
+              <span id="log-count">0 commands logged</span>
+              <button id="clear-log-btn" class="clear-btn">Clear Log</button>
+            </div>
+          </div>
+          <div id="log-stream" class="log-stream">
+            <div class="log-welcome">
+              [SYSTEM] WebMCP Adventure Engine initialized. Listening on <code>navigator.modelContext</code>...
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Win Modal Dialog -->
+    <div id="win-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h2 class="modal-title">&#128640; MISSION ACCOMPLISHED!</h2>
+        <p id="win-message" class="modal-text"></p>
+        <button id="restart-btn" class="restart-btn">Restart Mission</button>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

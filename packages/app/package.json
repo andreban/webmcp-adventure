@@ -1,0 +1,21 @@
+{
+  "name": "@webmcp-adventure/app",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@webmcp-adventure/engine": "*",
+    "@webmcp-adventure/game": "*",
+    "pixi.js": "^8.3.0",
+    "howler": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.11",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}
