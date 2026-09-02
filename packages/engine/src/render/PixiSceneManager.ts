@@ -117,6 +117,9 @@ export class PixiSceneManager {
     if (!currentRoom) return;
 
     // Clear previous layers
+    for (const sprite of this.entitySprites.values()) {
+      sprite.destroy({ children: true });
+    }
     this.roomLayer.removeChildren();
     this.entityLayer.removeChildren();
     this.entitySprites.clear();
@@ -631,9 +634,14 @@ export class PixiSceneManager {
   }
 
   public refreshEntities(): void {
-    if (!this.state) return;
+    if (!this.state || !this.entityLayer) return;
     const currentRoom = this.state.rooms.get(this.state.currentRoomId);
     if (currentRoom) {
+      for (const sprite of this.entitySprites.values()) {
+        sprite.destroy({ children: true });
+      }
+      this.entityLayer.removeChildren();
+      this.entitySprites.clear();
       this.drawEntities(currentRoom);
     }
   }

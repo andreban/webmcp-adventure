@@ -270,11 +270,13 @@ export class ActionPipeline {
     const entity = this.findEntityInCurrentRoom(rawTarget);
     if (entity) {
       const renderer = this.getRenderer();
-      const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: 260 };
+      const currentRoom = this.state.rooms.get(this.state.currentRoomId);
+      const floorY = currentRoom?.defaultPlayerPosition.y ?? 370;
+      const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: floorY };
       const dx = entity.position.x - playerPos.x;
       const targetPos = {
         x: Math.round(entity.position.x + (dx >= 0 ? -35 : 35)),
-        y: entity.position.y,
+        y: floorY,
       };
 
       if (renderer) {
@@ -322,11 +324,13 @@ export class ActionPipeline {
 
     // Animate walking over to the item first
     const renderer = this.getRenderer();
-    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: 260 };
+    const currentRoom = this.state.rooms.get(this.state.currentRoomId);
+    const floorY = currentRoom?.defaultPlayerPosition.y ?? 370;
+    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: floorY };
     const dx = entity.position.x - playerPos.x;
     const targetPos = {
       x: Math.round(entity.position.x + (dx >= 0 ? -25 : 25)),
-      y: entity.position.y,
+      y: floorY,
     };
 
     if (renderer) {
@@ -476,11 +480,13 @@ export class ActionPipeline {
     const entity = this.findEntityInCurrentRoom(rawTarget);
     if (entity) {
       const renderer = this.getRenderer();
-      const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: 260 };
+      const currentRoom = this.state.rooms.get(this.state.currentRoomId);
+      const floorY = currentRoom?.defaultPlayerPosition.y ?? 370;
+      const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: floorY };
       const dx = entity.position.x - playerPos.x;
       const targetPos = {
         x: Math.round(entity.position.x + (dx >= 0 ? -35 : 35)),
-        y: entity.position.y,
+        y: floorY,
       };
 
       if (renderer) {
@@ -528,11 +534,13 @@ export class ActionPipeline {
 
     // Animate walking over to NPC first
     const renderer = this.getRenderer();
-    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: 260 };
+    const currentRoom = this.state.rooms.get(this.state.currentRoomId);
+    const floorY = currentRoom?.defaultPlayerPosition.y ?? 370;
+    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: floorY };
     const dx = npc.position.x - playerPos.x;
     const targetPos = {
       x: Math.round(npc.position.x + (dx >= 0 ? -40 : 40)),
-      y: npc.position.y,
+      y: floorY,
     };
 
     if (renderer) {
@@ -571,11 +579,13 @@ export class ActionPipeline {
 
     // Animate walking over to NPC first
     const renderer = this.getRenderer();
-    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: 260 };
+    const currentRoom = this.state.rooms.get(this.state.currentRoomId);
+    const floorY = currentRoom?.defaultPlayerPosition.y ?? 370;
+    const playerPos = this.state.getEntity('robot')?.position ?? { x: 400, y: floorY };
     const dx = npcEntity.position.x - playerPos.x;
     const targetPos = {
       x: Math.round(npcEntity.position.x + (dx >= 0 ? -40 : 40)),
-      y: npcEntity.position.y,
+      y: floorY,
     };
 
     if (renderer) {

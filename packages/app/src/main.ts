@@ -35,16 +35,9 @@ async function initApp() {
     },
   });
 
-  // 2. Sync WebMCP with browser navigator.modelContext
-  const registered = engine.webmcp.syncWithNavigator();
-  const webmcpBadge = document.getElementById('webmcp-status');
-  if (webmcpBadge) {
-    if (registered) {
-      webmcpBadge.innerHTML = '<span class="pulse"></span> WebMCP Native';
-    } else {
-      webmcpBadge.innerHTML = '<span class="pulse"></span> WebMCP Ready';
-    }
-  }
+  // 2. Sync WebMCP with browser document.modelContext / navigator.modelContext
+  await syncWebMCPStatus();
+
 
   // 3. Bind UI & Engine Event Listeners
   bindEngineEvents();
@@ -263,5 +256,25 @@ function bindUIControls() {
   });
 }
 
+async function syncWebMCPStatus(): Promise<boolean> {
+  const registered = await engine.webmcp.syncWithModelContext();
+  const webmcpBadge = document.getElementById('webmcp-status');
+  if (webmcpBadge) {
+    if (registered) {
+      webmcpBadge.innerHTML = '<span class="pulse"></span> WebMCP Native';
+    } else {
+      webmcpBadge.innerHTML = '<span class="pulse"></span> WebMCP Ready';
+    }
+  }
+  return registered;
+}
+
 // Start application
 window.addEventListener('DOMContentLoaded', initApp);
+
+// Retry sync on window load in case extensions/browser inject modelContext after DOMContentLoaded
+window.addEventListener('load', async () => {
+  if (!engine.webmcp.isRegistered()) {
+    await syncWebMCPStatus();
+  }
+});
